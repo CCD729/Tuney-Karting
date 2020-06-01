@@ -33,8 +33,8 @@ namespace KartGame.KartSystems
 
         [Tooltip("Should gizmos be drawn for debugging purposes? This is helpful for checking the rays.")]
         public bool DrawGizmos;
-        [Tooltip("What audio clip should play when the kart collides with a wall")]
-        public AudioClip BounceSound;
+        //[Tooltip("What audio clip should play when the kart collides with a wall")]
+        //public AudioClip BounceSound;
 
         ArcadeKart kart;
         float resumeTime;
@@ -85,10 +85,11 @@ namespace KartGame.KartSystems
                     BounceFlag = hasCollided = true;
                     resumeTime = Time.time + PauseTime;
 
-                    if (BounceSound)
-                    {
-                        AudioUtility.CreateSFX(BounceSound, transform.position, AudioUtility.AudioGroups.Collision, 0f);
-                    }
+                    //TODO bouncesound
+                    //if (BounceSound)
+                    //{
+                    //    AudioUtility.CreateSFX(BounceSound, transform.position, AudioUtility.AudioGroups.Collision, 0f);
+                    //}
                     return;
                 }
             }

@@ -83,8 +83,8 @@ public class ObjectiveToast : MonoBehaviour
         m_IsFadingIn = false;
         m_IsMovingIn = false;
 
-        // if a sound was set, play it
-        PlaySound(completedSound);
+        // if a sound was set, play it TODO end sound
+        //PlaySound(completedSound);
 
         // start the fade out
         m_IsFadingOut = true;
@@ -114,7 +114,8 @@ public class ObjectiveToast : MonoBehaviour
                 // end the fade in
                 m_IsFadingIn = false;
 
-                PlaySound(initSound);
+                //TODO init sound
+                //PlaySound(initSound);
             }
         }
 

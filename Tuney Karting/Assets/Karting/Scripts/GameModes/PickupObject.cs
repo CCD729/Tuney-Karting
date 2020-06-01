@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 
 /// <summary>
 /// This class inherits from TargetObject and represents a PickupObject.
@@ -16,6 +17,10 @@ public class PickupObject : TargetObject
     [Tooltip("Destroy this gameobject after collectDuration seconds")]
     public float collectDuration = 0f;
 
+    public int chkptIndex;
+
+    public AudioPlayer audioPlayer;
+
     void Start() {
         Register();
     }
@@ -26,7 +31,6 @@ public class PickupObject : TargetObject
         {
             AudioUtility.CreateSFX(CollectSound, transform.position, AudioUtility.AudioGroups.Pickup, 0f);
         }
-
         if (spawnPrefabOnPickup)
         {
             var vfx = Instantiate(spawnPrefabOnPickup, CollectVFXSpawnPoint.position, Quaternion.identity);
@@ -36,6 +40,9 @@ public class PickupObject : TargetObject
         Objective.OnUnregisterPickup(this);
 
         TimeManager.OnAdjustTime(TimeGained);
+
+        //HEAVY TRIGGER
+        audioPlayer.triggerLayer(chkptIndex);
 
         Destroy(gameObject, collectDuration);
     }

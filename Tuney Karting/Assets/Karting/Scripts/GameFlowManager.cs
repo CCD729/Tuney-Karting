@@ -21,8 +21,8 @@ public class GameFlowManager : MonoBehaviour
     public float delayBeforeFadeToBlack = 4f;
     [Tooltip("Duration of delay before the win message")]
     public float delayBeforeWinMessage = 2f;
-    [Tooltip("Sound played on win")]
-    public AudioClip victorySound;
+    //[Tooltip("Sound played on win")]
+    //public AudioClip victorySound;
 
     [Tooltip("Prefab for the win game message")]
     public DisplayMessage winDisplayMessage;
@@ -163,12 +163,12 @@ public class GameFlowManager : MonoBehaviour
             m_SceneToLoad = winSceneName;
             m_TimeLoadEndGameScene = Time.time + endSceneLoadDelay + delayBeforeFadeToBlack;
 
-            // play a sound on win
-            var audioSource = gameObject.AddComponent<AudioSource>();
-            audioSource.clip = victorySound;
-            audioSource.playOnAwake = false;
-            audioSource.outputAudioMixerGroup = AudioUtility.GetAudioGroup(AudioUtility.AudioGroups.HUDVictory);
-            audioSource.PlayScheduled(AudioSettings.dspTime + delayBeforeWinMessage);
+            // play a sound on win TODO
+            //var audioSource = gameObject.AddComponent<AudioSource>();
+            //audioSource.clip = victorySound;
+            //audioSource.playOnAwake = false;
+            //audioSource.outputAudioMixerGroup = AudioUtility.GetAudioGroup(AudioUtility.AudioGroups.HUDVictory);
+            //audioSource.PlayScheduled(AudioSettings.dspTime + delayBeforeWinMessage);
 
             // create a game message
             winDisplayMessage.delayBeforeShowing = delayBeforeWinMessage;

@@ -1,30 +1,7 @@
 Base path: 'C:/Program Files/Unity/Hub/Editor/2019.3.11f1/Editor/Data', plugins path 'C:/Program Files/Unity/Hub/Editor/2019.3.11f1/Editor/Data/PlaybackEngines'
 Cmd: initializeCompiler
-Cmd: compileComputeKernel
-  api=4 insize=7960 outsize=1611 ok=1
-Cmd: compileComputeKernel
-  api=4 insize=6546 outsize=2550 ok=1
-Cmd: compileComputeKernel
-  api=4 insize=47665 outsize=1282 ok=1
-Cmd: compileComputeKernel
-  api=4 insize=47665 outsize=1316 ok=1
-Cmd: compileComputeKernel
-  api=4 insize=47665 outsize=1879 ok=1
-Cmd: compileComputeKernel
-  api=4 insize=47665 outsize=1585 ok=1
-Cmd: compileComputeKernel
-  api=4 insize=29386 outsize=711 ok=1
-Cmd: compileComputeKernel
-  api=4 insize=29386 outsize=749 ok=1
-Cmd: compileComputeKernel
-  api=4 insize=29386 outsize=700 ok=1
-Cmd: compileComputeKernel
-  api=4 insize=29386 outsize=1301 ok=1
-Cmd: compileComputeKernel
-  api=4 insize=29386 outsize=1256 ok=1
-Cmd: compileComputeKernel
-  api=4 insize=31899 outsize=6224 ok=1
 Cmd: compileSnippet
-  api=4 type=0 insize=1554 outsize=1806 kw=UNITY_PASS_DEFERRED LIGHTPROBE_SH _EMISSION UNITY_HDR_ON pd=UNITY_ENABLE_REFLECTION_BUFFERS UNITY_USE_DITHER_MASK_FOR_ALPHABLENDED_SHADOWS UNITY_PBS_USE_BRDF1 UNITY_SPECCUBE_BOX_PROJECTION UNITY_SPECCUBE_BLENDING UNITY_ENABLE_DETAIL_NORMALMAP SHADER_API_DESKTOP UNITY_COLORSPACE_GAMMA UNITY_LIGHT_PROBE_PROXY_VOLUME UNITY_LIGHTMAP_FULL_HDR ok=1
+  api=4 type=0 insize=1224 outsize=750 kw= pd=UNITY_ENABLE_REFLECTION_BUFFERS UNITY_USE_DITHER_MASK_FOR_ALPHABLENDED_SHADOWS UNITY_PBS_USE_BRDF1 UNITY_SPECCUBE_BOX_PROJECTION UNITY_SPECCUBE_BLENDING UNITY_ENABLE_DETAIL_NORMALMAP SHADER_API_DESKTOP UNITY_COLORSPACE_GAMMA UNITY_LIGHT_PROBE_PROXY_VOLUME UNITY_LIGHTMAP_FULL_HDR ok=1
+Unhandled exception: Protocol error - unexpected end of data (did the Editor crash?)
 
 Quitting shader compiler process
