@@ -1,11 +1,19 @@
 ﻿using System.Collections;
 using UnityEngine;
+using System;
 
 /// <summary>
 /// This class inherits from TargetObject and represents a PickupObject.
 /// </summary>
 public class PickupObject : TargetObject
 {
+    [Serializable]
+    public struct CheckpointFX
+    {
+        public ParticleSystem CompleteVFX;
+    }
+    public CheckpointFX fx;
+
     [Header("PickupObject")]
 
     [Tooltip("New Gameobject (a VFX for example) to spawn when you trigger this PickupObject")]
@@ -43,6 +51,10 @@ public class PickupObject : TargetObject
 
         //HEAVY TRIGGER
         audioPlayer.triggerLayer(chkptIndex);
+
+        //vfx trigger
+        fx.CompleteVFX.transform.parent = null;
+        fx.CompleteVFX.Play();
 
         Destroy(gameObject, collectDuration);
     }
