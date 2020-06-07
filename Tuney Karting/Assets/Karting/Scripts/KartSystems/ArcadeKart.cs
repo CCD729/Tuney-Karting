@@ -81,6 +81,7 @@ namespace KartGame.KartSystems
         }
 
         public Rigidbody Rigidbody { get; private set; }
+        public float velocityAudio;
         public Vector2 Input       { get; private set; }
         public float AirPercent    { get; private set; }
         public float GroundPercent { get; private set; }
@@ -141,6 +142,8 @@ namespace KartGame.KartSystems
 
         void FixedUpdate()
         {
+            velocityAudio = Mathf.Sqrt(Rigidbody.velocity.x* Rigidbody.velocity.x+ Rigidbody.velocity.z * Rigidbody.velocity.z);
+
             ResetIfStuck();
 
             GatherInputs();

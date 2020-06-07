@@ -72,14 +72,54 @@ public class Hv_heavy_Editor : Editor {
       _dsp.SendEvent(Hv_heavy_AudioLib.Event.Bass);
     }
 
-    // drum
-    if (GUILayout.Button("drum")) {
-      _dsp.SendEvent(Hv_heavy_AudioLib.Event.Drum);
+    // checkpoint0
+    if (GUILayout.Button("checkpoint0")) {
+      _dsp.SendEvent(Hv_heavy_AudioLib.Event.Checkpoint0);
     }
 
-    // fill
-    if (GUILayout.Button("fill")) {
-      _dsp.SendEvent(Hv_heavy_AudioLib.Event.Fill);
+    // checkpoint1
+    if (GUILayout.Button("checkpoint1")) {
+      _dsp.SendEvent(Hv_heavy_AudioLib.Event.Checkpoint1);
+    }
+
+    // checkpoint2
+    if (GUILayout.Button("checkpoint2")) {
+      _dsp.SendEvent(Hv_heavy_AudioLib.Event.Checkpoint2);
+    }
+
+    // checkpoint3
+    if (GUILayout.Button("checkpoint3")) {
+      _dsp.SendEvent(Hv_heavy_AudioLib.Event.Checkpoint3);
+    }
+
+    // drum1
+    if (GUILayout.Button("drum1")) {
+      _dsp.SendEvent(Hv_heavy_AudioLib.Event.Drum1);
+    }
+
+    // drum2
+    if (GUILayout.Button("drum2")) {
+      _dsp.SendEvent(Hv_heavy_AudioLib.Event.Drum2);
+    }
+
+    // engine
+    if (GUILayout.Button("engine")) {
+      _dsp.SendEvent(Hv_heavy_AudioLib.Event.Engine);
+    }
+
+    // fill1
+    if (GUILayout.Button("fill1")) {
+      _dsp.SendEvent(Hv_heavy_AudioLib.Event.Fill1);
+    }
+
+    // fill2
+    if (GUILayout.Button("fill2")) {
+      _dsp.SendEvent(Hv_heavy_AudioLib.Event.Fill2);
+    }
+
+    // finishline
+    if (GUILayout.Button("finishline")) {
+      _dsp.SendEvent(Hv_heavy_AudioLib.Event.Finishline);
     }
 
     // startendvol
@@ -91,7 +131,26 @@ public class Hv_heavy_Editor : Editor {
     if (GUILayout.Button("startstopseq")) {
       _dsp.SendEvent(Hv_heavy_AudioLib.Event.Startstopseq);
     }
-    
+
+    // wall
+    if (GUILayout.Button("wall")) {
+      _dsp.SendEvent(Hv_heavy_AudioLib.Event.Wall);
+    }
+    // PARAMETERS
+    GUI.enabled = true;
+    EditorGUILayout.Space();
+    EditorGUI.indentLevel++;
+
+    // frequency
+    GUILayout.BeginHorizontal();
+    float frequency = _dsp.GetFloatParameter(Hv_heavy_AudioLib.Parameter.Frequency);
+    float newFrequency = EditorGUILayout.Slider("frequency", frequency, 0.0f, 1000.0f);
+    if (frequency != newFrequency) {
+      _dsp.SetFloatParameter(Hv_heavy_AudioLib.Parameter.Frequency, newFrequency);
+    }
+    GUILayout.EndHorizontal();
+
+    EditorGUI.indentLevel--;
 
     
 
@@ -113,10 +172,33 @@ public class Hv_heavy_AudioLib : MonoBehaviour {
   */
   public enum Event : uint {
     Bass = 0xB22988B3,
-    Drum = 0x50D18EF7,
-    Fill = 0xD7495902,
+    Checkpoint0 = 0xBE91CD3D,
+    Checkpoint1 = 0x722233D1,
+    Checkpoint2 = 0x6C9956BF,
+    Checkpoint3 = 0x788F601B,
+    Drum1 = 0x3F39B418,
+    Drum2 = 0x8FCE9327,
+    Engine = 0x244220AD,
+    Fill1 = 0x1A7F5CA8,
+    Fill2 = 0x273FAC58,
+    Finishline = 0xBF0FF3A0,
     Startendvol = 0xAB48ADCE,
     Startstopseq = 0x23B86B24,
+    Wall = 0xD853AFF7,
+  }
+  
+  // Parameters are used to send float messages into the patch context (thread-safe).
+  // Example usage:
+  /*
+    void Start () {
+        Hv_heavy_AudioLib script = GetComponent<Hv_heavy_AudioLib>();
+        // Get and set a parameter
+        float frequency = script.GetFloatParameter(Hv_heavy_AudioLib.Parameter.Frequency);
+        script.SetFloatParameter(Hv_heavy_AudioLib.Parameter.Frequency, frequency + 0.1f);
+    }
+  */
+  public enum Parameter : uint {
+    Frequency = 0x907A8E19,
   }
   
   // Delegate method for receiving float messages from the patch context (thread-safe).
@@ -143,6 +225,7 @@ public class Hv_heavy_AudioLib : MonoBehaviour {
   }
   public delegate void FloatMessageReceived(FloatMessage message);
   public FloatMessageReceived FloatReceivedCallback;
+  public float frequency = 200.0f;
 
   // internal state
   private Hv_heavy_Context _context;
@@ -158,6 +241,26 @@ public class Hv_heavy_AudioLib : MonoBehaviour {
   // see Hv_heavy_AudioLib.Event for definitions
   public void SendEvent(Hv_heavy_AudioLib.Event e) {
     if (IsInstantiated()) _context.SendBangToReceiver((uint) e);
+  }
+  
+  // see Hv_heavy_AudioLib.Parameter for definitions
+  public float GetFloatParameter(Hv_heavy_AudioLib.Parameter param) {
+    switch (param) {
+      case Parameter.Frequency: return frequency;
+      default: return 0.0f;
+    }
+  }
+
+  public void SetFloatParameter(Hv_heavy_AudioLib.Parameter param, float x) {
+    switch (param) {
+      case Parameter.Frequency: {
+        x = Mathf.Clamp(x, 0.0f, 1000.0f);
+        frequency = x;
+        break;
+      }
+      default: return;
+    }
+    if (IsInstantiated()) _context.SendFloatToReceiver((uint) param, x);
   }
   
   public void SendFloatToReceiver(string receiverName, float x) {
@@ -201,6 +304,10 @@ public class Hv_heavy_AudioLib : MonoBehaviour {
   private void Awake() {
     _context = new Hv_heavy_Context((double) AudioSettings.outputSampleRate);
     
+  }
+  
+  private void Start() {
+    _context.SendFloatToReceiver((uint) Parameter.Frequency, frequency);
   }
   
   private void Update() {
@@ -313,7 +420,7 @@ class Hv_heavy_Context {
 
   private delegate void SendHook(IntPtr context, string sendName, uint sendHash, IntPtr message);
 
-  public Hv_heavy_Context(double sampleRate, int poolKb=10, int inQueueKb=2, int outQueueKb=2) {
+  public Hv_heavy_Context(double sampleRate, int poolKb=10, int inQueueKb=4, int outQueueKb=2) {
     gch = GCHandle.Alloc(msgQueue);
     _context = hv_heavy_new_with_options(sampleRate, poolKb, inQueueKb, outQueueKb);
     hv_setPrintHook(_context, new PrintHook(OnPrint));

@@ -40,6 +40,7 @@ namespace KartGame.KartSystems
         float resumeTime;
         bool hasCollided;
         Vector3 reflectionVector;
+        public AudioPlayer audioPlayer;
 
         void Start()
         {
@@ -85,6 +86,7 @@ namespace KartGame.KartSystems
                     BounceFlag = hasCollided = true;
                     resumeTime = Time.time + PauseTime;
 
+                    audioPlayer.playBounce();
                     //TODO bouncesound
                     //if (BounceSound)
                     //{
